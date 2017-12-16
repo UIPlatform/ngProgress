@@ -10,7 +10,7 @@ angular.module('ngProgress.directive', [])
             link: function ($scope, $element, $attrs, $controller) {
                 // Watch the count on the $rootScope. As soon as count changes to something that
                 // isn't undefined or null, change the counter on $scope and also the width of
-                // the progressbar. The same goes for color and height on the $rootScope
+                // the progressbar. The same goes for color, class and height on the $rootScope
                 $scope.$watch('count', function (newVal) {
                     if (newVal !== undefined || newVal !== null) {
                         $scope.counter = newVal;
@@ -22,6 +22,12 @@ angular.module('ngProgress.directive', [])
                         $scope.color = newVal;
                         $element.eq(0).children().css('background-color', newVal);
                         $element.eq(0).children().css('color', newVal);
+                    }
+                });
+                $scope.$watch('class', function (newVal) {
+                    if (newVal !== undefined || newVal !== null) {
+                        $scope.class = newVal;
+                        $element.eq(0).children().attr('class', newVal);
                     }
                 });
                 $scope.$watch('height', function (newVal) {

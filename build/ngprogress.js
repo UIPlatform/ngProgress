@@ -1,9 +1,9 @@
 /*
-ngprogress 1.1.2 - slim, site-wide progressbar for AngularJS 
-(C) 2013 - Victor Bjelkholm 
+ngprogress 1.1.3 - slim, site-wide progressbar for AngularJS 
+(C) 2013 - Raghavendra K R 
 License: MIT 
-Source: https://github.com/VictorBjelkholm/ngProgress 
-Date Compiled: 2015-07-27 
+Source: https://github.com/UIPlatform/ngProgress 
+Date Compiled: 2017-12-16 
 */
 angular.module('ngProgress.provider', ['ngProgress.directive'])
     .service('ngProgress', function () {
@@ -11,9 +11,10 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
 				return ['$document', '$window', '$compile', '$rootScope', '$timeout', function($document, $window, $compile, $rootScope, $timeout) {
 						this.autoStyle = true;
 						this.count = 0;
-            this.height = '2px';
+                        this.height = '2px';
 						this.$scope = $rootScope.$new();
-						this.color = 'firebrick';
+                        this.color = 'firebrick';
+                        this.class = '';
 						this.parent = $document.find('body')[0];
 						this.count = 0;
 
@@ -30,6 +31,9 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
             if (this.color !== undefined) {
                 this.progressbarEl.eq(0).children().css('background-color', this.color);
                 this.progressbarEl.eq(0).children().css('color', this.color);
+            }
+            if (this.class !== undefined) {
+                this.progressbarEl.eq(0).children().attr('class', this.class);
             }
             // The ID for the interval controlling start()
             this.intervalCounterId = 0;
@@ -84,6 +88,18 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
                         }
                     }
                     return this.color;
+                };
+                // Sets the class of the progressbar . Use any valid CSS Class
+                // class
+                this.setClass = function(new_class) {
+                    if (new_class !== undefined) {
+                        this.class = new_class;
+                        this.$scope.class = this.class;
+                        if(!this.$scope.$$phase) {
+                            this.$scope.$apply();
+                        }
+                    }
+                    return this.class;
                 };
                 this.hide = function() {
                     this.progressbarEl.children().css('opacity', '0');
@@ -190,7 +206,7 @@ angular.module('ngProgress.directive', [])
             link: function ($scope, $element, $attrs, $controller) {
                 // Watch the count on the $rootScope. As soon as count changes to something that
                 // isn't undefined or null, change the counter on $scope and also the width of
-                // the progressbar. The same goes for color and height on the $rootScope
+                // the progressbar. The same goes for color, class and height on the $rootScope
                 $scope.$watch('count', function (newVal) {
                     if (newVal !== undefined || newVal !== null) {
                         $scope.counter = newVal;
@@ -202,6 +218,12 @@ angular.module('ngProgress.directive', [])
                         $scope.color = newVal;
                         $element.eq(0).children().css('background-color', newVal);
                         $element.eq(0).children().css('color', newVal);
+                    }
+                });
+                $scope.$watch('class', function (newVal) {
+                    if (newVal !== undefined || newVal !== null) {
+                        $scope.class = newVal;
+                        $element.eq(0).children().attr('class', newVal);
                     }
                 });
                 $scope.$watch('height', function (newVal) {

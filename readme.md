@@ -1,8 +1,11 @@
 ## ngProgress.js
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/VictorBjelkholm/ngProgress?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/UIPlatform/ngProgress.svg?branch=master)](https://travis-ci.org/UIPlatform/ngProgress)
 
-[![Build Status](https://travis-ci.org/VictorBjelkholm/ngProgress.png?branch=master)](https://travis-ci.org/VictorBjelkholm/ngProgress)
+### What's New
+* Made latest version available in npm repository, to close the [This Issue](https://github.com/VictorBjelkholm/ngProgress/issues/122) in Original Project 
+* added support to set class for the progressbar
+
 
 **ngProgress** is a provider for angular for showing a loading status of something.
 Use cases can be fetching external resources, showing a action taking more-than-normal length
@@ -13,7 +16,7 @@ or simple loading between the page views. Prefereble, only for resource heavy si
 Download ngProgress.js manually or install with bower
 
 ```bash
-$ bower install ngprogress
+$ bower install @icircle/ngprogress
 ```
 
 Include **ngProgress.js** ( or **ngProgress.min.js**) and **ngProgress.css** in your website.

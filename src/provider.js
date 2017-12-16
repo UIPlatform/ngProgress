@@ -5,9 +5,10 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
 				return ['$document', '$window', '$compile', '$rootScope', '$timeout', function($document, $window, $compile, $rootScope, $timeout) {
 						this.autoStyle = true;
 						this.count = 0;
-            this.height = '2px';
+                        this.height = '2px';
 						this.$scope = $rootScope.$new();
-						this.color = 'firebrick';
+                        this.color = 'firebrick';
+                        this.class = '';
 						this.parent = $document.find('body')[0];
 						this.count = 0;
 
@@ -24,6 +25,9 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
             if (this.color !== undefined) {
                 this.progressbarEl.eq(0).children().css('background-color', this.color);
                 this.progressbarEl.eq(0).children().css('color', this.color);
+            }
+            if (this.class !== undefined) {
+                this.progressbarEl.eq(0).children().attr('class', this.class);
             }
             // The ID for the interval controlling start()
             this.intervalCounterId = 0;
@@ -78,6 +82,18 @@ angular.module('ngProgress.provider', ['ngProgress.directive'])
                         }
                     }
                     return this.color;
+                };
+                // Sets the class of the progressbar . Use any valid CSS Class
+                // class
+                this.setClass = function(new_class) {
+                    if (new_class !== undefined) {
+                        this.class = new_class;
+                        this.$scope.class = this.class;
+                        if(!this.$scope.$$phase) {
+                            this.$scope.$apply();
+                        }
+                    }
+                    return this.class;
                 };
                 this.hide = function() {
                     this.progressbarEl.children().css('opacity', '0');
